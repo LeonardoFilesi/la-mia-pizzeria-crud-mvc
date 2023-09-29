@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - la_mia_pizzeria_razor_layout</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/la_mia_pizzeria_razor_layout.styles.css" asp-append-version="true" />
+</head>
+<body style="background-color: #ffb458;">
+
+
+    <header>
+        <nav class="navbar navbar-expand-lg" style="background-color: #ffb458; height:100%;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/Home/Index">Admin - Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/UserIndex">User - Side</a>
+                        </li>
+                    </ul>
+                    <img src="https://st4.depositphotos.com/22705892/29149/v/450/depositphotos_291497556-stock-illustration-creative-food-logo-simple-pizza.jpg" style="height:60px;" />
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid d-flex" style="justify-content:center; align-items:center; margin-bottom:50px; height: 350px; background-image:url('https://cdn.vox-cdn.com/thumbor/U6I_bfCqJUViBncjqYIs2orzivk=/0x188:787x778/920x613/filters:focal(0x188:787x778):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/48635261/garlic-knots-pizza.0.0.jpeg'); background-size: cover; background-position: center; text-align: center; color: white;">
+            <div style="border-radius: 50px; background-color:rgb(16 21 31 / 62%); width:650px; height:80%;">
+                <p style="font-size: 60px;">A Famo Strana Pizzeria</p>
+                <p style="font-size: 30px;;">Pizze assurde dal mondo, scelte di giornata!</p>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <footer class="container-fluid footer text-muted">
+        <div class="d-flex" style="border-radius: 50% 50% 0px 0px; height: 250px; background-color: #be3500; justify-content:space-evenly;">
+            <ul class="d-flex gap-3" style="justify-content:center; flex-direction:column">
+                <li><i class="fa-brands fa-square-facebook"></i></li>
+                <li><i class="fa-brands fa-twitter"></i></li>
+                <li><i class="fa-brands fa-square-instagram"></i></li>
+                <li><i class="fa-brands fa-square-youtube"></i></li>
+            </ul>
+
+            <ul class="d-flex gap-3" style="justify-content:center; flex-direction:column">
+                <li>Contattaci</li>
+                <li>Email</Email></li>
+                <li>FAQ</li>
+                <li>Collegamenti</li>
+            </ul>
+
+            <ul class="d-flex gap-3" style="justify-content:center; flex-direction:column">
+                <li><i class="fa-brands fa-square-facebook"></i></li>
+                <li><i class="fa-brands fa-twitter"></i></li>
+                <li><i class="fa-brands fa-square-instagram"></i></li>
+                <li><i class="fa-brands fa-square-youtube"></i></li>
+            </ul>
+        </div>
+    </footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
