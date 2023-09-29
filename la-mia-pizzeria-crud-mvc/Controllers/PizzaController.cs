@@ -4,7 +4,7 @@ using System.Diagnostics;  // Questa classe che richiamo, la sto artificialmente
 
 namespace la_mia_pizzeria_crud_mvc.Controllers
 {
-    public class HomeController1 : Controller
+    public class PizzaController : Controller
     {
         public IActionResult Index()
         {
