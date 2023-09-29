@@ -1,7 +1,10 @@
-﻿namespace la_mia_pizzeria_crud_mvc.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace la_mia_pizzeria_crud_mvc.Models
 {
     public class Pizza
     {
+        [Key] public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
@@ -14,6 +17,11 @@
             this.Description = description;
             this.Price = price;
             this.Image = image;
+        }
+
+        public Pizza()
+        {
+
         }
     }
 }
