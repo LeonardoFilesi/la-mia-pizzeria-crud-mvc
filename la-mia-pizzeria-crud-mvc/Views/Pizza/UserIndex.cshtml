@@ -18,7 +18,7 @@
                         <div class="carousel-inner">
                             @foreach(Pizza pizza in Model)
                             {
-                                <div class="carousel-item active">
+                                <div class="carousel-item active"> <!--ACTIVE PROBLEMA CON CAROSELLO-->
                                     <img src="@pizza.Image" class="d-block w-100" alt="..." style="height: 500px;">
                                     <div class="carousel-caption d-none d-md-block" style="border-radius: 10px; background-color:rgb(16 21 31 / 62%);">
                                         <h5>Pizza: @pizza.Name</h5>
@@ -50,7 +50,7 @@
                                     <th scope="col">Nome:</th>
                                     <th scope="col">Ingredienti:</th>
                                     <th scope="col">Prezzo:</th>
-                                    <th scope="col">Azioni:</th>
+                                <th scope="col">Azioni:</th>
                                 </tr>
                             </thead>
                             <tbody>
