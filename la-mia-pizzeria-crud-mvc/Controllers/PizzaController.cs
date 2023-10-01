@@ -24,5 +24,23 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
                 return View("UserIndex", pizzas);
             }
         }
+
+        public IActionResult Details(int id)
+        {
+            using (PizzaContext db = new PizzaContext())
+            {
+                Pizza? foundedPizza = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+
+                if (foundedPizza == null)
+                {
+                    return NotFound($"La pizza con id:{id} non è stato trovato!");
+                }
+                else
+                {
+                    return View("Details", foundedPizza);
+                }
+            }
+        }
+
     }
 }
