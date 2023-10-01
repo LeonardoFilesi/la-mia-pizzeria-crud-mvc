@@ -29,9 +29,9 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-       // public IActionResult UserIndex()
-       // {
-       //   return View();
-       // }
+        public IActionResult UserIndex()
+        {
+          return View();
+        }
     }
 }

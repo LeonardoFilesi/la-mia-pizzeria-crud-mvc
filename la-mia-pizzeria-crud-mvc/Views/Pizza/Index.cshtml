@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "_MioLayout";
+}
+@model List<Pizza>
+@if(Model.Count() == 0)
+{
+    <h3>Non ci sono Pizze da mostrare</h3>
+}
+else
+{
+    
+}
+
+
+    
+
+ <main>
+    <div class="d-flex flex-column" style="background-color: #ffb458; height:100%;">
+    <!-- con Razor, creare lista prodotti e ciclarli con cicli for e foreach -->
+            <!-- TABELLA -->
+
+        <div class="d-flex" style="justify-content: center">
+            <h2 style="color: white">Menu Pizze assurde di oggi!</h2>
+        </div>
+                    
+        <div class="p-3">
+            <table class="table" style="color: white">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nome:</th>
+                        <th scope="col">Ingredienti:</th>
+                        <th scope="col">Prezzo:</th>
+                    </tr>
+                </thead>
+                    <tbody>
+
+                        @foreach(Pizza pizza in Model)
+                            {
+                                <tr>    
+                                    <th scope="row">@pizza.Id</th>
+                                    <td>@pizza.Name</td>
+                                    <td><p>@pizza.Description</p></td>
+                                    <td>@pizza.Price $</td>
+                                </tr>
+                            } 
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+  
+
+
+
+    <!-- DENTRO CARTELLA CSS C'E' IL FILE TEST -->
+
