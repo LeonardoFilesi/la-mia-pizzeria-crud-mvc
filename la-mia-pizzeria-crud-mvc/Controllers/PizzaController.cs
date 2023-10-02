@@ -55,7 +55,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
             {
                 return View("Create", newPizza);
             }
-            using(PizzaContext db = new PizzaContext)
+            using(PizzaContext db = new PizzaContext())
             {
                 db.Pizzas.Add(newPizza);
                 db.SaveChanges();

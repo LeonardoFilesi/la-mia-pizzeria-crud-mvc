@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using la_mia_pizzeria_crud_mvc.ValidationAttributes;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace la_mia_pizzeria_crud_mvc.Models
@@ -13,6 +14,7 @@ namespace la_mia_pizzeria_crud_mvc.Models
         public string Name { get; set; }
 
         //------------------------------------------------------------------------------------------------------------------------
+        [Pizza5Words]
         [Required(ErrorMessage = "La descrizione della Pizza è obbligatoria")] // AGGIUNTA per la VALIDAZIONE
         [Column(TypeName = "text")]  // AGGIUNTA se si vogliono specificare ancora di più le colonne
         public string Description { get; set; }
