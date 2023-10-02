@@ -1,0 +1,32 @@
+﻿﻿@{
+    Layout = "_MioLayout";
+}
+@model Pizza
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Crea una nuova Pizza da aggiungere</h1>
+        </div>
+        <form asp-controller="Pizza" asp-action="Create" method="post">
+            @Html.AntiForgeryToken()         <!--DA METTERE SEMPRE PER LA SICUREZZA DEL CODICE-->
+            <div class="mb-3">
+                <strong>Titolo:</strong>
+                <input type="text" class="form-control" asp-for="Name">
+            </div>
+            <div class="mb-3">
+                <strong>Descrizione:</strong>
+                <input type="text" class="form-control" asp-for="Description">
+            </div>
+            <div class="mb-3">
+                <strong>Prezzo:</strong>
+                <input type="text" class="form-control" asp-for="Price">
+            </div>
+            <div class="mb-3">
+                <strong>URL Immagine:</strong>
+                <input type="text" class="form-control" asp-for="Image">
+            </div>
+            <button type="submit" class="btn btn-primary">Aggiungi nuova Pizza</button>
+        </form>
+    </div>
+</div>
