@@ -1,3 +1,5 @@
+using la_mia_pizzeria_crud_mvc.CustomLoggers;
+
 namespace la_mia_pizzeria_crud_mvc
 {
     public class Program
@@ -8,7 +10,8 @@ namespace la_mia_pizzeria_crud_mvc
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddScoped<ICustomLogger, CustomFileLogger>();   // PERCHE' NON FUNZIA??? E PERCHE' HA CAMBIATO DA FILE A CONSOLE? (io non ho ancora cambiato)
+                                                                             // MANCA UN BUILDER
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

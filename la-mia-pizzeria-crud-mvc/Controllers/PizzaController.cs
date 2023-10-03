@@ -3,13 +3,24 @@ using la_mia_pizzeria_crud_mvc.Models;  // Questa classe che richiamo, la sto ar
 using System.Diagnostics;  // Questa classe che richiamo, la sto artificialmente richiamando, non è stata scritta automaticamente
 using la_mia_pizzeria_crud_mvc.Database;
 using Microsoft.Identity.Client;
+using la_mia_pizzeria_crud_mvc.CustomLoggers;
 
 namespace la_mia_pizzeria_crud_mvc.Controllers
 {
     public class PizzaController : Controller
     {
+        private CustomFileLogger _mylogger;
+        public PizzaController(ICustomLogger _logger)
+        {
+            _mylogger = _logger;  //PERCHE' NON FUNZIA??? HO SCRITTO UGUALE (ancora non ho scritto ICustomLogger)
+            _myDatabase = db;     //PERCHE' NON FUNZIA??? HO SCRITTO UGUALE (ancora non ho scritto ICustomLogger)
+        }
+                // ERA COSI' = new CustomFileLogger();   // PERCHE' CAMBIARE DA CONSOLE A FILE?  CAMBIARLO AD OGNI CONTROLLER NON E' UN LAVORO CHE DOVREI FARE IO, MA LE DEPENDENCIES
+                // AGGIUNGE UN PEZZO DI CODICE CHE SEMPLIFICA LA SINTASSI DI TUTTO IL CONTROLLER "_myDatabase"
+        
         public IActionResult Index()
         {
+            _mylogger.WriteLog("L'utente è arrivato sulla pagina Pizza > Index");
             using(PizzaContext db = new PizzaContext())
             {
                 List<Pizza> pizzas = db.Pizzas.ToList<Pizza>();
