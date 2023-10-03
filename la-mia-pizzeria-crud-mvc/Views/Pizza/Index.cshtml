@@ -10,14 +10,16 @@ else
 {
      <main>
         <div class="d-flex flex-column" style="background-color: #ffb458; height:100%;">
-        <!-- con Razor, creare lista prodotti e ciclarli con cicli for e foreach -->
-                <!-- TABELLA -->
 
+                <!-- TABELLA -->
             <div class="d-flex" style="justify-content: center">
                 <h2 style="color: white">Menu Pizze assurde di oggi!</h2>
             </div>
                     
             <div class="p-3">
+
+                <a class="btn btn-primary" href="@Url.Action("Create", "Article")"> Aggiungi nuova Pizza </a>
+
                 <table class="table" style="color: white">
                     <thead>
                         <tr>
@@ -39,12 +41,17 @@ else
                                         <td>@pizza.Price $</td>
                                         <td>
                                             <a class="btn btn-danger" href="@Url.Action("Details", "Pizza", new { id = pizza.Id })" title="pizza details">DETAILS</a>
+                                            <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 } 
                         </tbody>
 
-                        <!--AGGIUNGERE BOTTONE CHE PORTI A CREATE-->
                         <!--AGGIUNGERE BOTTONE CHE PORTI A UPDATE-->
                 </table>
             </div>

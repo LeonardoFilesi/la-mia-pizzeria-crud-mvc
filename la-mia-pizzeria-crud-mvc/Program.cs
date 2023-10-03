@@ -11,7 +11,9 @@ namespace la_mia_pizzeria_crud_mvc
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<ICustomLogger, CustomFileLogger>();   // PERCHE' NON FUNZIA??? E PERCHE' HA CAMBIATO DA FILE A CONSOLE? (io non ho ancora cambiato)
+
+            //DEPENDECY INJECTION
+            builder.Services.AddScoped<ICustomLogger, CustomFileLogger>();
             builder.Services.AddScoped<PizzaContext, PizzaContext>();
             
             var app = builder.Build();

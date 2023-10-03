@@ -1,6 +1,7 @@
-﻿namespace la_mia_pizzeria_crud_mvc.CustomLoggers
+﻿using System.Diagnostics;
+namespace la_mia_pizzeria_crud_mvc.CustomLoggers
 {
-    public class CustomConsoleLogger
+    public class CustomConsoleLogger : ICustomLogger
     {
         public void WriteLog(string message)
         {
