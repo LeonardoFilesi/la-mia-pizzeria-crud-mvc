@@ -50,7 +50,8 @@
                                     <th scope="col">Nome:</th>
                                     <th scope="col">Ingredienti:</th>
                                     <th scope="col">Prezzo:</th>
-                                <th scope="col">Azioni:</th>
+                                    <th scope="col">Azioni:</th>
+                                    <th scope="col">Elimina:</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,7 +59,7 @@
                                 {
                                     <tr>
                                         <th scope="row">@pizza.Id</th>
-                                        <td>Pizza: p@pizza.Name/td>
+                                        <td>Pizza: @pizza.Name</td>
                                         <td><p>@pizza.Description</p></td>
                                         <td>@pizza.Price $</td>
                                         <td>
@@ -71,15 +72,15 @@
                     </div>
 
                     <!-- CARTE -->
-                    <div class="d-flex" style="justify-content: space-evenly;">
+                    <div class="d-flex flex-wrap" style="justify-content: space-evenly;">
                         @foreach(Pizza pizza in Model)
                         {
-                            <div class="card" style="width: 18rem;">
-                                <img src="@pizza.Image" class="card-img-top" alt="...">
+                            <div class="card" style="width: 18rem; margin-bottom:20px;">
+                                <img src="@pizza.Image" class="card-img-top" alt="..." style="height:100%">
                                 <div class="card-body">
                                     <h5 class="card-title">@pizza.Name</h5>
                                     <p class="card-text">@pizza.Description</p>
-                                    <p class="card-text">@pizza.Price</p>
+                                    <p class="card-text">@pizza.Price $</p>
                                 </div>
                                 <div class="card-body">
                                     <a href="#" class="card-link">Card link</a>

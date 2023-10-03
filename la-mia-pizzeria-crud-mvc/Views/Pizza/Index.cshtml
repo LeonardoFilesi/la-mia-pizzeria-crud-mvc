@@ -18,7 +18,7 @@ else
                     
             <div class="p-3">
 
-                <a class="btn btn-primary" href="@Url.Action("Create", "Article")"> Aggiungi nuova Pizza </a>
+                <a class="btn btn-primary" href="@Url.Action("Create", "Pizza")"> Aggiungi nuova Pizza </a>
 
                 <table class="table" style="color: white">
                     <thead>
@@ -40,7 +40,11 @@ else
                                         <td><p>@pizza.Description</p></td>
                                         <td>@pizza.Price $</td>
                                         <td>
-                                            <a class="btn btn-danger" href="@Url.Action("Details", "Pizza", new { id = pizza.Id })" title="pizza details">DETAILS</a>
+                                            <a class="btn btn-danger" href="@Url.Action("Details", "Pizza", new { id = pizza.Id })" title="pizza details">DETTAGLI</a>
+                                            <hr>
+                                            <a class="btn btn-warning" href="@Url.Action("Update", "Pizza", new { id = pizza.Id })" title="pizza details">AGGIORNA</a>
+                                        </td>
+                                        <td>
                                             <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
                                                 @Html.AntiForgeryToken()
                                                 <button type="submit" class="btn btn-danger btn-sm">
