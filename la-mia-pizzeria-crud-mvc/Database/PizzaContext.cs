@@ -6,6 +6,7 @@ namespace la_mia_pizzeria_crud_mvc.Database
     public class PizzaContext : DbContext
     {
         public DbSet<Pizza> Pizzas { get; set; }
+        public DbSet<Category> Categories { get; set; }  // AGGIUNTO QUESO FARE MIGRATION E AGGIORNARE DATABASE
 
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

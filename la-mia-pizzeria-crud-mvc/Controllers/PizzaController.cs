@@ -22,11 +22,10 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         public IActionResult Index()
         {
             _mylogger.WriteLog("L'utente è arrivato sulla pagina Pizza > Index");
-            using(PizzaContext db = new PizzaContext())
-            {
-                List<Pizza> pizzas = db.Pizzas.ToList<Pizza>();
+
+                List<Pizza> pizzas = _myDatabase.Pizzas.ToList<Pizza>();
                 return View("Index", pizzas);
-            }
+            
         }
 
         public IActionResult UserIndex()
@@ -58,89 +57,91 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            List<Category> categories = _myDatabase.Categories.ToList();
+            PizzaFormModel model = new PizzaFormModel { Pizza = new Pizza(), Categories = categories };
             return View("Create");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Pizza newPizza)
+        public IActionResult Create(PizzaFormModel data)
         {
             if (!ModelState.IsValid)
             {
-                return View("Create", newPizza);
+                List<Category> categories = _myDatabase.Categories.ToList();
+                data.Categories = categories;
+                return View("Create", data);
             }
-            using(PizzaContext db = new PizzaContext())
-            {
-                db.Pizzas.Add(newPizza);
-                db.SaveChanges();
+
+                _myDatabase.Pizzas.Add(data.Pizza);
+                _myDatabase.SaveChanges();
                 return RedirectToAction("Index");
-            }
+
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            using(PizzaContext db = new PizzaContext())
-            {
-                Pizza pizzaToEdit = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault() as Pizza;
+
+                Pizza? pizzaToEdit = _myDatabase.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
 
                 if(pizzaToEdit == null)
                 {
                     return NotFound("La pizza non è stata trovata");
                 } else
                 {
+                List<Category> categories = _myDatabase.Categories.ToList();
+
+                PizzaFormModel model = new PizzaFormModel { Pizza = pizzaToEdit, Categories = categories };
                     return View("Update", pizzaToEdit);
                 }
-            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(int id, Pizza updatedPizza)
+        public IActionResult Update(int id, PizzaFormModel data)
         {
             if (!ModelState.IsValid) 
             {
-                return View("Update", updatedPizza);
+                List<Category> categories = _myDatabase.Categories.ToList();
+                data.Categories = categories;
+                return View("Update", data);
             }
 
-            using(PizzaContext db = new PizzaContext())
-            {
-                Pizza pizzaToUpdate = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+            Pizza? pizzaToUpdate = _myDatabase.Pizzas.Find(id);
 
                 if (pizzaToUpdate != null)
                 {
-                    pizzaToUpdate.Name = updatedPizza.Name;
-                    pizzaToUpdate.Description = updatedPizza.Description;
-                    pizzaToUpdate.Image = updatedPizza.Image;
-                    pizzaToUpdate.Price = updatedPizza.Price;
+                EntityEntry<Pizza> entryEntity = _myDatabase.Entry(pizzaToUpdate);
+                entryEntity.CurrentValues.SetValues(data.Pizza);
 
-                    db.SaveChanges();
+                    _myDatabase.SaveChanges();
+
                     return RedirectToAction("Index");
                 } else
                 {
                     return NotFound("Mi spiace, non sono state trovate Pizze da aggiornare");
                 }
-            }
+            
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            using(PizzaContext db = new PizzaContext())
-            {
-                Pizza? pizzaToDelete = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+
+                Pizza? pizzaToDelete = _myDatabase.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
 
                 if(pizzaToDelete != null)
                 {
-                    db.Pizzas.Remove(pizzaToDelete);
-                    db.SaveChanges();
+                   _myDatabase.Pizzas.Remove(pizzaToDelete);
+                   _myDatabase.SaveChanges();
 
                     return RedirectToAction("Index");
                 } else
                 {
                     return NotFound("La Pizza da eliminare non è stata trovata");
                 }
-            }
+         
         }
 
     }
