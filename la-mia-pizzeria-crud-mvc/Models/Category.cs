@@ -6,7 +6,7 @@ namespace la_mia_pizzeria_crud_mvc.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Il titolo della categoria è obbligatorio!")]
-        [StringLength(500, ErrorMessage ="Il link non può essere lungo più di 500 caratteri")]
+        [StringLength(50, ErrorMessage ="Il link non può essere lungo più di 50 caratteri")]
         public string Name { get; set; }    
 
         //RELAZIONE 1 A n TRA PIZZA E CATEGORIA

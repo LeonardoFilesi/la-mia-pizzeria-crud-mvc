@@ -28,7 +28,8 @@ namespace la_mia_pizzeria_crud_mvc.Models
         public string Image {  get; set; }
 
         // AGGIUNGERE CategoryId e la relazione con CATEGORY
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
+        public Category? Category { get; set; }
 
 
         public Pizza(string name, string description, int price, string image)
