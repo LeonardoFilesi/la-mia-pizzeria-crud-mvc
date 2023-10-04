@@ -8,7 +8,7 @@
         <div class="col-12">
             <h1>Aggiorna una Pizza esistente</h1>
         </div>
-        <form asp-controller="Pizza" asp-action="Update" asp-route-id="@Model.Id" method="post">
+        <form asp-controller="Pizza" asp-action="Update" asp-route-id="@Model.Pizza.Id" method="post">
             @Html.AntiForgeryToken()         <!--DA METTERE SEMPRE PER LA SICUREZZA DEL CODICE-->
             <div class="mb-3">
                 <strong>Titolo:</strong>
