@@ -10,16 +10,19 @@
         </div>
         <form asp-controller="Pizza" asp-action="Create" method="post">
             @Html.AntiForgeryToken()         <!--DA METTERE SEMPRE PER LA SICUREZZA DEL CODICE-->
+            <!--NOME-->
             <div class="mb-3">
-                <strong>Titolo:</strong>
+                <strong>Nome:</strong>
                 <input type="text" class="form-control" asp-for="Pizza.Name">
                 <span asp-validation-for="Pizza.Name" class="text-danger"></span>
             </div>
+            <!--DESCRIZIONE-->
             <div class="mb-3">
                 <strong>Descrizione:</strong>
                 <input type="text" class="form-control" asp-for="Pizza.Description">
                 <span asp-validation-for="Pizza.Description" class="text-danger"></span>
             </div>
+            <!--CATEGORIA-->
             <div class="mb-3">
                 <strong>Categoria:</strong>
                 <select asp-for="Pizza.CategoryId" rows="10" class="d-block w-100">
@@ -30,11 +33,23 @@
                     }
                 </select>
             </div>
+            <!-- SELECT MULTIPLA PER GLI INGREDIENTI -->
+            <div class="mb-3">
+                <strong>Seleziona Tags:</strong>
+                <select asp-for="SelectedIngredientiId"
+                        multiple="multiple"
+                        size="10"
+                        class="form-control mb-2 mr-sm-2 ml-sm-3 leftList"
+                        asp-items="@Model.Ingredienti">
+                </select>
+            </div>
+            <!--PREZZO-->
             <div class="mb-3">
                 <strong>Prezzo:</strong>
                 <input type="number" class="form-control" asp-for="Pizza.Price" min="0">
                 <span asp-validation-for="Pizza.Image" class="text-danger"></span>
             </div>
+            <!--IMMAGINE-->
             <div class="mb-3">
                 <strong>URL Immagine:</strong>
                 <input type="text" class="form-control" asp-for="Pizza.Image">

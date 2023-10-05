@@ -6,6 +6,8 @@ using Microsoft.Identity.Client;
 using la_mia_pizzeria_crud_mvc.CustomLoggers;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
+using Azure;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace la_mia_pizzeria_crud_mvc.Controllers
 {
@@ -24,7 +26,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         {
             _mylogger.WriteLog("L'utente è arrivato sulla pagina Pizza > Index");
 
-            List<Pizza> pizzas = _myDatabase.Pizzas.Include(pizza => pizza.Category).ToList<Pizza>();
+            List<Pizza> pizzas = _myDatabase.Pizzas.Include(pizza => pizza.Category).Include(pizza => pizza.Ingredientis).ToList<Pizza>();
             return View("Index", pizzas);
 
         }
@@ -33,7 +35,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         {
             using (PizzaContext db = new PizzaContext())
             {
-                List<Pizza> pizzas = db.Pizzas.Include(pizza => pizza.Category).ToList<Pizza>();
+                List<Pizza> pizzas = db.Pizzas.Include(pizza => pizza.Category).Include(pizza => pizza.Ingredientis).ToList<Pizza>();
                 return View("UserIndex", pizzas);
             }
         }
@@ -42,7 +44,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         {
             using (PizzaContext db = new PizzaContext())
             {
-                Pizza? foundedPizza = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+                Pizza? foundedPizza = db.Pizzas.Where(pizza => pizza.Id == id).Include(pizza => pizza.Category).Include(pizza => pizza.Ingredientis).FirstOrDefault();
 
                 if (foundedPizza == null)
                 {
@@ -59,7 +61,22 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         public IActionResult Create()
         {
             List<Category> categories = _myDatabase.Categories.ToList();
-            PizzaFormModel model = new PizzaFormModel { Pizza = new Pizza(), Categories = categories };
+
+            // OPERAZIONE NECESSARIA per passare al nuovo PizzaFormModel solo le informazioni string Name e int Id delle istanze di Ingredienti
+            List<SelectListItem> allIngredientisSelectList = new List<SelectListItem>();
+            List<Ingredienti> databaseAllIngredientis = _myDatabase.Ingredientis.ToList();
+            foreach (Ingredienti ingredienti in databaseAllIngredientis)
+            {
+                allIngredientisSelectList.Add(
+                    new SelectListItem
+                    {
+                        Text = ingredienti.Name,
+                        Value = ingredienti.Id.ToString()
+                    });
+            }
+
+            PizzaFormModel model = new PizzaFormModel{ Pizza = new Pizza(), Categories = categories, Ingredienti = allIngredientisSelectList};
+           
             return View("Create", model);
         }
         [HttpPost]
@@ -70,6 +87,15 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
             {
                 List<Category> categories = _myDatabase.Categories.ToList();
                 data.Categories = categories;
+
+                List<SelectListItem> allIngredientisSelectList = new List<SelectListItem>();
+                List<Ingredienti> databaseAllIngredientis = _myDatabase.Ingredientis.ToList();
+                foreach (Ingredienti ingredienti in databaseAllIngredientis)
+                {
+                    allIngredientisSelectList.Add(new SelectListItem { Text = ingredienti.Name, Value = ingredienti.Id.ToString() });
+                }
+                data.Ingredienti = allIngredientisSelectList;
+                
                 return View("Create", data);
             }
 
@@ -83,7 +109,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         public IActionResult Update(int id)
         {
 
-            Pizza? pizzaToEdit = _myDatabase.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+            Pizza? pizzaToEdit = _myDatabase.Pizzas.Where(pizza => pizza.Id == id).Include(pizza => pizza.Category).Include(pizza => pizza.Ingredientis).FirstOrDefault();
 
             if (pizzaToEdit == null)
             {
