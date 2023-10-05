@@ -5,6 +5,7 @@ using la_mia_pizzeria_crud_mvc.Database;
 using Microsoft.Identity.Client;
 using la_mia_pizzeria_crud_mvc.CustomLoggers;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_crud_mvc.Controllers
 {
@@ -23,7 +24,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         {
             _mylogger.WriteLog("L'utente è arrivato sulla pagina Pizza > Index");
 
-            List<Pizza> pizzas = _myDatabase.Pizzas.ToList<Pizza>();
+            List<Pizza> pizzas = _myDatabase.Pizzas.Include(pizza => pizza.Category).ToList<Pizza>();
             return View("Index", pizzas);
 
         }
@@ -32,7 +33,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         {
             using (PizzaContext db = new PizzaContext())
             {
-                List<Pizza> pizzas = db.Pizzas.ToList<Pizza>();
+                List<Pizza> pizzas = db.Pizzas.Include(pizza => pizza.Category).ToList<Pizza>();
                 return View("UserIndex", pizzas);
             }
         }

@@ -25,7 +25,8 @@ else
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Nome:</th>
-                            <th scope="col">Ingredienti:</th>
+                            <th scope="col">Categoria:</th>
+                            <th scope="col">Descrizione:</th>
                             <th scope="col">Prezzo:</th>
                             <th scope="col">Azioni:</th>
                             <th scope="col">Elimina:</th>
@@ -38,6 +39,7 @@ else
                                     <tr>    
                                         <th scope="row">@pizza.Id</th>
                                         <td>@pizza.Name</td>
+                                        <td><p>@pizza.Category?.Name</p></td>
                                         <td><p>@pizza.Description</p></td>
                                         <td>@pizza.Price $</td>
                                         <td>
