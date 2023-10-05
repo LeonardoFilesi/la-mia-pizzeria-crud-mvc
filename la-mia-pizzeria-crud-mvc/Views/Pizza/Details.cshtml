@@ -16,7 +16,32 @@
 
         <p>DESCRIZIONE: @Model.Description</p>
         <p>PRIEZZO: @Model.Price $</p>
-        <p>CATEGORIA: @Model.Category</p>
+        <p>CATEGORIA:
+            @if (Model.Category != null)
+            {
+                 <p>@Model.Category.Name</p>
+            }
+            else
+            {
+                <span>Non è stata ancora selezionata una categoria</span>
+            }
+
+        <p>
+            <sp>INGREDIENTI:</sp>
+            @if (Model.Ingredientis != null && Model.Ingredientis.Count > 0)
+            {
+                <ul>
+                    @foreach (Ingredienti ingredienti in Model.Ingredientis)
+                    {
+                        <li>@ingredienti.Name</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <span>Non è stata ancora compilata la lista degli ingredienti</span>
+            }
+        </p>
 
     </div>
 

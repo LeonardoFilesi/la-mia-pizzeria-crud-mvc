@@ -59,6 +59,7 @@
                                     <th scope="col">Nome:</th>
                                     <th scope="col">Descrizione:</th>
                                     <th scope="col">Categoria:</th>
+                                    <th scope="col">Ingredienti:</th>
                                     <th scope="col">Prezzo:</th>
                                     <th scope="col">Azioni:</th>
                                 </tr>
@@ -71,6 +72,21 @@
                                         <td>Pizza: @pizza.Name</td>
                                         <td><p>@pizza.Description</p></td>
                                         <td><p>@pizza.Category?.Name</p></td>
+                                        <td>
+                                        @if (pizza.Ingredientis != null && pizza.Ingredientis.Count > 0)
+                                            {
+                                                <ul>
+                                                @foreach (Ingredienti ingredienti in pizza.Ingredientis)
+                                                    {
+                                                        <li>@ingredienti.Name</li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <span>Non è stata ancora compilata la lista degli ingredienti</span>
+                                            }
+                                        </td>
                                         <td>@pizza.Price $</td>
                                         <td>
                                             <a class="btn btn-danger" href="@Url.Action("Details", "Pizza", new { id = pizza.Id })" title="pizza details">DETAILS</a>

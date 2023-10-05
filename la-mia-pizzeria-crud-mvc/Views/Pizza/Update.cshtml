@@ -38,6 +38,15 @@
                 </select>
             </div>
             <div class="mb-3">
+                <strong>Ingredienti:</strong>
+                <select asp-for="SelectedIngredientiId"
+                        multiple="multiple"
+                        size="10"
+                        class="form-control mb-2 mr-sm-2 ml-sm-3 leftList"
+                        asp-items="@Model.Ingredienti">
+                </select>
+            </div>
+            <div class="mb-3">
                 <strong>Prezzo:</strong>
                 <input type="number" class="form-control" asp-for="Pizza.Price" min="0">
                 <span asp-validation-for="Pizza.Image" class="text-danger"></span>

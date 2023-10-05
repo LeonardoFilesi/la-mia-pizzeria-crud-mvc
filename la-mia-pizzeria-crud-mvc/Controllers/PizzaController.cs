@@ -99,6 +99,23 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
                 return View("Create", data);
             }
 
+            data.Pizza.Ingredientis = new List<Ingredienti>();
+
+            if (data.SelectedIngredientiId != null)
+            {
+                foreach(string ingredientiSelectedid in data.SelectedIngredientiId)
+                {
+                    int intIngredientiSelectedId = int.Parse(ingredientiSelectedid);
+
+                    Ingredienti? ingredientiInDataBase = _myDatabase.Ingredientis.Where(ingredienti => ingredienti.Id == intIngredientiSelectedId).FirstOrDefault();
+
+                    if(ingredientiInDataBase != null)
+                    {
+                        data.Pizza.Ingredientis.Add(ingredientiInDataBase);
+                    }
+                }
+            }
+
             _myDatabase.Pizzas.Add(data.Pizza);
             _myDatabase.SaveChanges();
             return RedirectToAction("Index");
@@ -119,7 +136,19 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
             {
                 List<Category> categories = _myDatabase.Categories.ToList();
 
-                PizzaFormModel model = new PizzaFormModel { Pizza = pizzaToEdit, Categories = categories };
+                List<SelectListItem> allIngredientisSelectList = new List<SelectListItem>();
+                List<Ingredienti> databaseAllIngredientis = _myDatabase.Ingredientis.ToList();
+                foreach (Ingredienti ingredienti in databaseAllIngredientis)
+                {
+                    allIngredientisSelectList.Add(new SelectListItem
+                    {
+                        Value = ingredienti.Id.ToString(),
+                        Text = ingredienti.Name,
+                        Selected = pizzaToEdit.Ingredientis.Any(ingredientiAssociated => ingredientiAssociated.Id == ingredienti.Id)
+                    });
+                }
+
+                PizzaFormModel model = new PizzaFormModel { Pizza = pizzaToEdit, Categories = categories, Ingredienti = allIngredientisSelectList };
                 return View("Update", model);
             }
         }
@@ -132,14 +161,43 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
             {
                 List<Category> categories = _myDatabase.Categories.ToList();
                 data.Categories = categories;
+
+                List<SelectListItem> allIngredientisSelectList = new List<SelectListItem>();
+                List<Ingredienti> databaseAllIngredientis = _myDatabase.Ingredientis.ToList();
+                foreach (Ingredienti ingredienti in databaseAllIngredientis)
+                {
+                    allIngredientisSelectList.Add(new SelectListItem
+                    {
+                        Value = ingredienti.Id.ToString(),
+                        Text = ingredienti.Name,
+                    });
+                }
+                data.Ingredienti = allIngredientisSelectList;
+
                 return View("Update", data);
             }
             data.Pizza.Id = id;
-            Pizza? pizzaToUpdate = _myDatabase.Pizzas.Find(id);
+            Pizza? pizzaToUpdate = _myDatabase.Pizzas.Where(pizza => pizza.Id == id).Include(pizza => pizza.Ingredientis).FirstOrDefault();
 
             if (pizzaToUpdate != null)
             {
+                data.Pizza.Ingredientis = new List<Ingredienti>();
                 EntityEntry<Pizza> entryEntity = _myDatabase.Entry(pizzaToUpdate);
+                
+                if(data.SelectedIngredientiId != null) 
+                {
+                    foreach (string ingredientiSelectedid in data.SelectedIngredientiId)
+                    {
+                        int intIngredientiSelectedId = int.Parse(ingredientiSelectedid);
+
+                        Ingredienti? ingredientiInDataBase = _myDatabase.Ingredientis.Where(ingredienti => ingredienti.Id == intIngredientiSelectedId).FirstOrDefault();
+
+                        if (ingredientiInDataBase != null)
+                        {
+                            pizzaToUpdate.Ingredientis.Add(ingredientiInDataBase);
+                        }
+                    }
+                }
                 entryEntity.CurrentValues.SetValues(data.Pizza);
 
                 _myDatabase.SaveChanges();
