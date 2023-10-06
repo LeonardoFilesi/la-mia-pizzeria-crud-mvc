@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
 using Azure;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace la_mia_pizzeria_crud_mvc.Controllers
 {
+    [Authorize(Roles = "ADMIN, USER")]
     public class PizzaController : Controller
     {
         private ICustomLogger _mylogger;
@@ -22,6 +24,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         }
         // AGGIUNGE UN PEZZO DI CODICE CHE SEMPLIFICA LA SINTASSI DI TUTTO IL CONTROLLER "_myDatabase"
 
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Index()
         {
             _mylogger.WriteLog("L'utente è arrivato sulla pagina Pizza > Index");
@@ -31,6 +34,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
 
         }
 
+        [Authorize(Roles = "ADMIN, USER")]
         public IActionResult UserIndex()
         {
             using (PizzaContext db = new PizzaContext())
@@ -40,6 +44,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMIN, USER")]
         public IActionResult Details(int id)
         {
             using (PizzaContext db = new PizzaContext())
@@ -57,6 +62,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -79,6 +85,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
            
             return View("Create", model);
         }
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(PizzaFormModel data)
@@ -122,6 +129,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
 
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -152,7 +160,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
                 return View("Update", model);
             }
         }
-
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(int id, PizzaFormModel data)
@@ -211,6 +219,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
 
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)

@@ -1,5 +1,8 @@
 using la_mia_pizzeria_crud_mvc.CustomLoggers;
 using la_mia_pizzeria_crud_mvc.Database;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace la_mia_pizzeria_crud_mvc
 {
@@ -8,6 +11,12 @@ namespace la_mia_pizzeria_crud_mvc
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            // var connectionString = builder.Configuration.GetConnectionString("PizzaContextConnection") ?? throw new InvalidOperationException("Connection string 'PizzaContextConnection' not found.");
+            // CODICE RIMOSSO COME DA ISTRUZIONI SLIDE PER AUTHENTICATION
+            // builder.Services.AddDbContext<PizzaContext>(options => options.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<PizzaContext>();
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<PizzaContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -26,16 +35,21 @@ namespace la_mia_pizzeria_crud_mvc
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Pizza}/{action=Index}/{id?}");
+
+            app.MapRazorPages();
 
             app.Run();
         }
